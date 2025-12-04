@@ -1,0 +1,24 @@
+services:
+  # Microservicio de PRODUCTOS
+  - type: web
+    name: productos-service-lista
+    env: docker
+    plan: free
+    rootDir: productos_service
+    dockerfilePath: ./Dockerfile
+    autoDeploy: true
+
+  # Microservicio de LISTAS
+  - type: web
+    name: listas-service-lista
+    env: docker
+    plan: free
+    rootDir: listas_service
+    dockerfilePath: ./Dockerfile
+    autoDeploy: true
+    envVars:
+      - key: PRODUCTS_SERVICE_URL
+        fromService:
+          type: web
+          name: productos-service-lista
+          envVarKey: RENDER_EXTERNAL_URL
